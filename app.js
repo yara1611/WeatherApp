@@ -1,11 +1,34 @@
 const key = 'SQ5NTAUJPTLHZ54BHH675H25E'
-const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/forecast?key=${key}`+'&aggregateHours=24&unitGroup=uk&shortColumnNames=false&contentType=json&locationMode=single'
+const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/forecast?key=${key}`+'&aggregateHours=24&shortColumnNames=false&contentType=json&locationMode=single'
 
 const btn = document.querySelector('button')
+const ukbtn = document.querySelector('#unitGroup-uk')
+const usbtn = document.querySelector('#unitGroup-us')
+
 const neededData = ['temp','sunrise','sunset','visibility','humidity','datetime']
+
+function checkToggle(btn){
+    if(btn.checked){
+        btn.checked=false
+    }
+   
+}
+
 btn.addEventListener('click',()=>{
+    var unitGroup
+    if(ukbtn.checked){
+        checkToggle(usbtn)
+        console.log(usbtn.checked)
+        unitGroup=ukbtn.value;
+        console.log(unitGroup)
+    }
+    if(usbtn.checked){
+        checkToggle(ukbtn)
+        unitGroup=usbtn.value
+        console.log(unitGroup)
+    }
     const location = document.querySelector('#location').value
-    fetch(url+`&locations=${location}`, {mode:"cors"})
+    fetch(url+`&locations=${location}&unitGroup=${unitGroup}`, {mode:"cors"})
     .then(function(response){
         return response.json()
     })
@@ -20,15 +43,12 @@ function filterResponseToday(response){
     console.log(response.location)
     return currentConditions
 }
-function filterResponseDays(response){
-    const otherDaysConditions = response.location.values
-    console.log(otherDaysConditions)
-    return otherDaysConditions
-}
+
 function displayCurrentConditions(response){
     var currentConditions = filterResponseToday(response)
     const result = document.querySelector('#result')
     const nextResult = document.querySelector('#days-results')
+    result.innerHTML=`<h1 style="text-align: center;">Today's Forcast</h1>`
     for (const cond in currentConditions) {
         if(neededData.includes(cond)){
             if (Object.hasOwnProperty.call(currentConditions, cond)) {
@@ -38,23 +58,7 @@ function displayCurrentConditions(response){
             }
         } 
     }
-    // var otherDaysConditions = filterResponseDays(response)
-    // for (const day of otherDaysConditions.values) {
-        
-    //         const dayDiv = document.createElement('div')
-    //         for (let i = 0; i < 6; i++) {
-    //                 const li = document.createElement('li')
-    //                 console.log(day[i])
-    //                 li.innerHTML = `${day[i]}`
-    //                 dayDiv.appendChild(li)
-                
-    //         }
-    //         nextResult.appendChild(dayDiv) 
-       
-    // }
    
 }
-function displayDaysConditions(otherDaysConditions) {
-    
-}
+
 

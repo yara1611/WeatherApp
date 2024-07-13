@@ -1,0 +1,40 @@
+.container{
+    display: grid;
+    grid-template: 100%/50% 50%;
+    height: 100vh;
+}
+#result{
+    background-color: rgba(174, 184, 190, 0.568);
+    padding-left: 30px;
+    padding-top: 20px;
+}
+#result > li{
+    list-style: none;
+    margin: 10px;
+}
+form{
+    background-color: rgba(95, 158, 160, 0.788);
+    text-align: center;
+    padding: 50px;
+}
+form >*{
+    margin-bottom: 10px;
+}
+#location{
+    border-radius: 8px;
+    border: none;
+    padding: 5px;
+}
+
+button{
+    background-color: rgb(18, 141, 141);
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    border-radius: 8px;
+}
